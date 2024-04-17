@@ -52,11 +52,11 @@ function [Time, Y] = odeRKLS44(f, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Method
-                               Tmp1 = y;            Tmp2 = -4*y/3;
-        fs = f(      t, Tmp1); Tmp1 = y + h*fs/2;   Tmp2 = Tmp2 + Tmp1/3;
-        fs = f(t + h/2, Tmp1); Tmp1 = y + h*fs/2.0; Tmp2 = Tmp2 + 2*Tmp1/3;
-        fs = f(t + h/2, Tmp1); Tmp1 = y + h*fs;     Tmp2 = Tmp2 + Tmp1/3;
-        fs = f(  t + h, Tmp1); Tmp1 = y + h*fs/6;
+                              Tmp1 = y;           Tmp2 = -4*y/3;
+        k = f(      t, Tmp1); Tmp1 = y + h*k/2;   Tmp2 = Tmp2 + Tmp1/3;
+        k = f(t + h/2, Tmp1); Tmp1 = y + h*k/2.0; Tmp2 = Tmp2 + 2*Tmp1/3;
+        k = f(t + h/2, Tmp1); Tmp1 = y + h*k;     Tmp2 = Tmp2 + Tmp1/3;
+        k = f(  t + h, Tmp1); Tmp1 = y + h*k/6;
 
         % Update values
         y = Tmp1 + Tmp2;
