@@ -1,5 +1,5 @@
-function [Time, Y] = odeRKSSP2(ODEfun, TSpan, Y0, h)
-    %ODERKSSP2, 2-stage, 2nd order TVD Runge-Kutta Shu-Osher Method Implementation
+function [Time, Y] = odeRK3(ODEfun, TSpan, Y0, h)
+    %ODERK3, 3rd Order, 3-Stages Runge-Kutta Method Implementation
     % Inputs:
     %   ODEfun: function handle for the ODE
     %   TSpan: time span as [t0, tf]
@@ -11,7 +11,7 @@ function [Time, Y] = odeRKSSP2(ODEfun, TSpan, Y0, h)
     %   TSpan= [0, 20];    % Time span
     %   Y0= [2; 0];        % Initial condition
     %   h = 0.01;          % Step size
-    %   [T, Y] = odeRKSSP2(f, TSpan, Y0, h);
+    %   [T, Y] = odeRK3(f, TSpan, Y0, h);
     %
     %   % Plot results
     %   figure;
@@ -21,11 +21,6 @@ function [Time, Y] = odeRKSSP2(ODEfun, TSpan, Y0, h)
     %   title('Van der Pol Equation');
     %   grid on;
     %   axis([0, 20, -3, 3]);
-    %
-    % References
-    %   * C.-W. Shu, S. Osher, "Efficient implementation of essentially non-oscillatory 
-    %       shock-capturing schemes", Journal of Computational Physics, 77, 1988, 439-471. 
-    %       https://doi.org/10.1016/0021-9991(88)90177-5.
 
     % Set default values if not provided
     if nargin < 4
@@ -39,6 +34,14 @@ function [Time, Y] = odeRKSSP2(ODEfun, TSpan, Y0, h)
     t = t0;
     y = Y0;
 
+    % RK3 Params
+    a1  = 1/6;
+    a2  = 2/3;
+    a3  = 1/6;
+    b2  = 1/2;
+    c21 = 1/2;
+    c32 = 2;
+
     % Preallocate arrays to store values
     StepNum = ceil((tf - t0) / h);
     Time = zeros(StepNum, 1);
@@ -50,10 +53,11 @@ function [Time, Y] = odeRKSSP2(ODEfun, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Method
-        k = ODEfun(    t,   y); Tmp = y + h * k;
-        k = ODEfun(t + h, Tmp);
+        k1 = ODEfun(       t,                   y);
+        k2 = ODEfun(t + b2*h,        y + h*c21*k1);
+        k3 = ODEfun(   t + h, y + h*(-k1 + c32*k2));
 
-        y = (y + Tmp + h*k) / 2;
+        y = y + h * (a1*k1 + a2*k2 + a3*k3);
         t = t + h;
 
         % Store values

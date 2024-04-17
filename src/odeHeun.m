@@ -44,7 +44,7 @@ function [Time, Y] = odeHeun(ODEfun, TSpan, Y0, h)
     % Main loop
     idx = 1;
     while t < tf
-        % Midpoint method
+        % Method
         k1 = ODEfun(    t,        y);
         k2 = ODEfun(t + h, y + h*k1);
 
