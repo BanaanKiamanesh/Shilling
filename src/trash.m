@@ -5,8 +5,8 @@ clc
 f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
 TSpan= [0, 20];    % Time span
 Y0= [2; 2];        % Initial condition
-h = 0.001;          % Step size
-[T, Y] = odeRKL5(f, TSpan, Y0, h);
+h = 0.01;          % Step size
+[T, Y] = odeRKLK5b(f, TSpan, Y0, h);
 
 % Plot results
 figure;
