@@ -1,10 +1,30 @@
 function [Time, Y] = odeRKLK5b(f, TSpan, Y0, h)
     %ODERKLK5B 5th Order Runge-Kutta Luther and Konen Second Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         5th order Runge-Kutta Luther-Konen (Second method)
+    %     Order:
+    %                         5
+    %     Number of Stages:
+    %                         6
+    %     Number of Registers:
+    %                         6
+    %     Links:
+    %         1. https://epubs.siam.org/doi/abs/10.1137/1007112
+    %
+    %
     % Inputs:
     %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE

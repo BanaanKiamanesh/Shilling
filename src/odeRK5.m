@@ -1,10 +1,28 @@
 function [Time, Y] = odeRK5(f, TSpan, Y0, h)
     %ODERK5 5th Order Runge-Kutta Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         5th order Runge-Kutta
+    %     Order:
+    %                         5
+    %     Number of Stages:
+    %                         6
+    %     Number of Registers:
+    %                         6
+    %
+    %
     % Inputs:
     %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE

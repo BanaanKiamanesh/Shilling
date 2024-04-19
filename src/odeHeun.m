@@ -1,10 +1,28 @@
-function [Time, Y] = odeHeun(ODEfun, TSpan, Y0, h)
-    %ODEHEUN Method Implementation
+function [Time, Y] = odeHeun(f, TSpan, Y0, h)
+    %ODEHEUN Heun's ODE Solver Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         Heun
+    %     Order:
+    %                         2
+    %     Number of Stages:
+    %                         2
+    %     Number of Registers:
+    %                         2
+    %
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -45,8 +63,8 @@ function [Time, Y] = odeHeun(ODEfun, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Method
-        k1 = ODEfun(    t,        y);
-        k2 = ODEfun(t + h, y + h*k1);
+        k1 = f(    t,        y);
+        k2 = f(t + h, y + h*k1);
 
         y = y + h * (k1 + k2) / 2;
         t = t + h;

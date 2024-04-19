@@ -1,10 +1,30 @@
 function [Time, Y] = odeRKS5(f, TSpan, Y0, h)
     %ODERKS5 5th Order Runge-Kutta Shanks Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         5th order Runge-Kutta Shanks
+    %     Order:
+    %                         5
+    %     Number of Stages:
+    %                         5
+    %     Number of Registers:
+    %                         5
+    %     Links:
+    %         1. http://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19650022581.pdf
+    %
+    %
     % Inputs:
     %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE

@@ -1,10 +1,30 @@
-function [Time, Y] = odeRK4(ODEfun, TSpan, Y0, h)
-    %ODERK4 Fourth-Order Runge-Kutta Method Implementation
+function [Time, Y] = odeRK4(f, TSpan, Y0, h)
+    %ODERK4 4th Order Runge-Kutta ODE Solver Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         4th order Runge-Kutta
+    %     Order:
+    %                         4
+    %     Number of Stages:
+    %                         4
+    %     Number of Registers:
+    %                         4
+    %     Links:
+    %         1. https://archive.org/stream/zeitschriftfrma12runggoog#page/n449/mode/2up
+    %
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -45,10 +65,10 @@ function [Time, Y] = odeRK4(ODEfun, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Runge-Kutta method
-        k1 = h * ODEfun(t, y);
-        k2 = h * ODEfun(t + h/2, y + k1/2);
-        k3 = h * ODEfun(t + h/2, y + k2/2);
-        k4 = h * ODEfun(t + h, y + k3);
+        k1 = h * f(t, y);
+        k2 = h * f(t + h/2, y + k1/2);
+        k3 = h * f(t + h/2, y + k2/2);
+        k4 = h * f(t + h, y + k3);
 
         % Update values
         y = y + (k1 + 2*k2 + 2*k3 + k4) / 6;

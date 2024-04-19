@@ -1,10 +1,32 @@
-function [Time, Y] = odeEuler(ODEfun, TSpan, Y0, h)
-    %ODEEULER Method Implementation
+function [Time, Y] = odeEuler(f, TSpan, Y0, h)
+    %ODEEULER Euler's ODE Solver Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         Euler
+    %     Order:
+    %                         1
+    %     Number of Stages:
+    %                         1
+    %     Number of Registers:
+    %                         1
+    %     CFL:
+    %                         1.0
+    %     Links:
+    %         1. https://archive.org/details/institutionescal020326mbp
+    %
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -45,7 +67,7 @@ function [Time, Y] = odeEuler(ODEfun, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Euler's method
-        y = y + h * ODEfun(t, y);
+        y = y + h * f(t, y);
         t = t + h;
 
         % Store values

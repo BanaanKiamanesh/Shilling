@@ -1,10 +1,34 @@
 function [Time, Y] = odeRKSSP54(f, TSpan, Y0, h)
     %ODERKSSP54 5-Stage Fourth-Order Runge-Kutta Method Implementation (CFL=1.508)
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         5-stage, 4th order SSP Runge-Kutta Spiteri-Ruuth
+    %     Order:
+    %                         4
+    %     Number of Stages:
+    %                         5
+    %     Number of Registers:
+    %                         4
+    %     Strong Stability Preserving:
+    %                         true
+    %     CFL:
+    %                         1.51
+    %     Links:
+    %         1. https://www.ams.org/journals/mcom/2006-75-253/S0025-5718-05-01772-2/S0025-5718-05-01772-2.pdf
+    %
+    %
     % Inputs:
     %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -74,7 +98,7 @@ function [Time, Y] = odeRKSSP54(f, TSpan, Y0, h)
         k1 = f(       t,  y);   Tmp2 = y + b10*h*k1;
         k1 = f(t + c1*h, Tmp2); Tmp2 = a20*y + a21*Tmp2 + b21*h*k1;
         k3 = f(t + c2*h, Tmp2); Tmp3 = a30*y + a32*Tmp2 + b32*h*k1;
-                                Tmp4 = a40*y + a43*Tmp3 + b43*h*k3;
+        Tmp4 = a40*y + a43*Tmp3 + b43*h*k3;
         k1 = f(t + c4*h, Tmp4);
 
         % Update values

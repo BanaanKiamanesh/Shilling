@@ -1,10 +1,30 @@
-function [Time, Y] = odeRKR4(ODEfun, TSpan, Y0, h)
-    %ODERKR4 Fourth-Order Runge-Kutta With Minimum Truncation Error Method Implementation
+function [Time, Y] = odeRKR4(f, TSpan, Y0, h)
+    %ODERKR4 4th Order Runge-Kutta With Minimum Truncation Error Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         4th order Runge-Kutta Ralston
+    %     Order:
+    %                         4
+    %     Number of Stages:
+    %                         4
+    %     Number of Registers:
+    %                         4
+    %     Links:
+    %         1. https://doi.org/10.1090%2FS0025-5718-1962-0150954-0
+    %
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -64,10 +84,10 @@ function [Time, Y] = odeRKR4(ODEfun, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Method
-        k1 = ODEfun(       t,                                y);
-        k2 = ODEfun(t + a2*h,                   y + h*(b21*k1));
-        k3 = ODEfun(t + a3*h,          y + h*(b31*k1 + b32*k2));
-        k4 = ODEfun(     t+h, y + h*(b41*k1 + b42*k2 + b43*k3));
+        k1 = f(       t,                                y);
+        k2 = f(t + a2*h,                   y + h*(b21*k1));
+        k3 = f(t + a3*h,          y + h*(b31*k1 + b32*k2));
+        k4 = f(     t+h, y + h*(b41*k1 + b42*k2 + b43*k3));
 
         % Update values
         y = y + h*(c1*k1 + c2*k2 + c3*k3 + c4*k4);

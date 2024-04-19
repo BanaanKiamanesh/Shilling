@@ -1,10 +1,34 @@
-function [Time, Y] = odeRKSSP53(ODEfun, TSpan, Y0, h)
-    %ODERKSSP53, 3-stage, 3rd order TVD Runge-Kutta method of Shu and Osher (1988). CFL=1.0. Implementation
+function [Time, Y] = odeRKSSP53(f, TSpan, Y0, h)
+    %ODERKSSP53, 3-stage, 3rd Order TVD Runge-Kutta Method of Spiteri-Ruuth Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         5-stage, 3rd order SSP Runge-Kutta Spiteri-Ruuth
+    %     Order:
+    %                         3
+    %     Number of Stages:
+    %                         5
+    %     Number of Registers:
+    %                         2
+    %     CFL:
+    %                         2.65
+    %     Strong Stability Preserving:
+    %                         true
+    %     Links:
+    %         1. https://www.ams.org/journals/mcom/2006-75-253/S0025-5718-05-01772-2/S0025-5718-05-01772-2.pdf
+    %
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -67,11 +91,11 @@ function [Time, Y] = odeRKSSP53(ODEfun, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Method
-        k = ODEfun(     t,    y); Tmp1 = y + b10*h*k;
-        k = ODEfun(t+c1*h, Tmp1); Tmp2 = Tmp1 + b21*h*k;
-        k = ODEfun(t+c2*h, Tmp2); Tmp1 = a30*y + a32*Tmp2 + b32*h*k;
-        k = ODEfun(t+c3*h, Tmp1); Tmp1 = a40*y + a43*Tmp1 + b43*h*k;
-        k = ODEfun(t+c4*h, Tmp1);
+        k = f(     t,    y); Tmp1 = y + b10*h*k;
+        k = f(t+c1*h, Tmp1); Tmp2 = Tmp1 + b21*h*k;
+        k = f(t+c2*h, Tmp2); Tmp1 = a30*y + a32*Tmp2 + b32*h*k;
+        k = f(t+c3*h, Tmp1); Tmp1 = a40*y + a43*Tmp1 + b43*h*k;
+        k = f(t+c4*h, Tmp1);
 
         y = a52*Tmp2 + a54*Tmp1 + b54*h*k;
         t = t + h;

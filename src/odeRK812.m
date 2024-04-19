@@ -1,10 +1,30 @@
 function [Time, Y] = odeRK812(ODEfun, TSpan, Y0, h)
     %ODERK812 8th Order Runge-Kutta Shanks Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         12-stage, 8th order Runge-Kutta Shanks
+    %     Order:
+    %                         8
+    %     Number of Stages:
+    %                         12
+    %     Number of Registers:
+    %                         12
+    %     Links:
+    %         1. http://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19650022581.pdf
+    %
+    %
     % Inputs:
     %   ODEfun: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
-    %   h: initial step size (default: 0.01)
+    %   Y0: initial condition as a column vector
+    %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE

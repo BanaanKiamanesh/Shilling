@@ -1,10 +1,28 @@
-function [Time, Y] = odeMidpoint(ODEfun, TSpan, Y0, h)
-    %ODEMIDPOINT Method Implementation
+function [Time, Y] = odeMidpoint(f, TSpan, Y0, h)
+    %ODEMIDPOINT Midpoint ODE Solver Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         Midpoint
+    %     Order:
+    %                         2
+    %     Number of Stages:
+    %                         2
+    %     Number of Registers:
+    %                         2
+    %
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -45,8 +63,8 @@ function [Time, Y] = odeMidpoint(ODEfun, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Midpoint method
-        k1 = ODEfun(        t,            y);
-        k2 = ODEfun(t + 0.5*h, y + 0.5*h*k1);
+        k1 = f(        t,            y);
+        k2 = f(t + 0.5*h, y + 0.5*h*k1);
 
         y = y + h * k2;
         t = t + h;

@@ -1,10 +1,30 @@
 function [Time, Y] = odeRKH10(f, TSpan, Y0, h)
     %ODERKH10 10th Order Runge-Kutta Hairer's Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         10th order Runge-Kutta Hairer
+    %     Order:
+    %                         10
+    %     Number of Stages:
+    %                         17
+    %     Number of Registers:
+    %                         17
+    %     Links:
+    %         1. https://www.researchgate.net/publication/31221486_A_Runge-Kutta_Method_of_Order_10
+    %
+    %
     % Inputs:
     %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
-    %   h: initial step size (default: 0.01)
+    %   Y0: initial condition as a column vector
+    %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE

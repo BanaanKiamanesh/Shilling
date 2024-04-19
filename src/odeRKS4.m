@@ -1,10 +1,30 @@
-function [Time, Y] = odeRKS4(ODEfun, TSpan, Y0, h)
+function [Time, Y] = odeRKS4(f, TSpan, Y0, h)
     %ODERKS4 Fourth-Order Runge-Kutta Shanks Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         4th order Runge-Kutta Shanks
+    %     Order:
+    %                         4
+    %     Number of Stages:
+    %                         4
+    %     Number of Registers:
+    %                         4
+    %     Links:
+    %         http://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19650022581.pdf
+    %
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -66,10 +86,10 @@ function [Time, Y] = odeRKS4(ODEfun, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Runge-Kutta method
-        f0 = ODEfun(       t,                                    y);
-        f1 = ODEfun(t + a1*h,                         y + aa1*h*f0);
-        f2 = ODEfun(t + a2*h,          y + aa2*h*(b20*f0 + b21*f1));
-        f3 = ODEfun(     t+h, y + aa3*h*(b30*f0 + b31*f1 + b32*f2));
+        f0 = f(       t,                                    y);
+        f1 = f(t + a1*h,                         y + aa1*h*f0);
+        f2 = f(t + a2*h,          y + aa2*h*(b20*f0 + b21*f1));
+        f3 = f(     t+h, y + aa3*h*(b30*f0 + b31*f1 + b32*f2));
 
         % Update values
         y = y + h*c*(c0*f0 + c1*f1 + c2*f2 + c3*f3);

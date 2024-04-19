@@ -1,10 +1,27 @@
-function [Time, Y] = odeRK3(ODEfun, TSpan, Y0, h)
-    %ODERK3, 3rd Order, 3-Stages Runge-Kutta Method Implementation
+function [Time, Y] = odeRK3(f, TSpan, Y0, h)
+    %ODERK3, 3rd Order, 3-Stages Runge-Kutta ODE Solver Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         3th order Runge-Kutta
+    %     Order:
+    %                         3
+    %     Number of Stages:
+    %                         3
+    %     Number of Registers:
+    %                         3
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -53,9 +70,9 @@ function [Time, Y] = odeRK3(ODEfun, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Method
-        k1 = ODEfun(       t,                   y);
-        k2 = ODEfun(t + b2*h,        y + h*c21*k1);
-        k3 = ODEfun(   t + h, y + h*(-k1 + c32*k2));
+        k1 = f(       t,                   y);
+        k2 = f(t + b2*h,        y + h*c21*k1);
+        k3 = f(   t + h, y + h*(-k1 + c32*k2));
 
         y = y + h * (a1*k1 + a2*k2 + a3*k3);
         t = t + h;

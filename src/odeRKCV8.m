@@ -1,10 +1,30 @@
-function [Time, Y] = odeRKCV8(ODEfun, TSpan, Y0, h)
+function [Time, Y] = odeRKCV8(f, TSpan, Y0, h)
     %ODERKCV8 11-Stage 8th Order Runge-Kutta Cooper-Verner Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         11-stage, 8th order Runge-Kutta Cooper-Verner
+    %     Order:
+    %                         8
+    %     Number of Stages:
+    %                         11
+    %     Number of Registers:
+    %                         11
+    %     Links:
+    %         1. https://epubs.siam.org/doi/abs/10.1137/0709037
+    %
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
-    %   h: initial step size (default: 0.01)
+    %   Y0: initial condition as a column vector
+    %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -108,17 +128,17 @@ function [Time, Y] = odeRKCV8(ODEfun, TSpan, Y0, h)
     Idx = 1;
     while t < tf
         % Method
-        k1  = ODEfun(    t + h,                                                                   y);
-        k2  = ODEfun( t + a2*h,                                                      y + h*(b21*k1));
-        k3  = ODEfun( t + a3*h,                                             y + h*(b31*k1 + b32*k2));
-        k4  = ODEfun( t + a4*h,                                   y + h*(b41*k1 + b42*k2  + b43*k3));
-        k5  = ODEfun( t + a5*h,                                   y + h*(b51*k1 + b53*k3  + b54*k4));
-        k6  = ODEfun( t + a6*h,                         y + h*(b61*k1 + b63*k3  + b64*k4  + b65*k5));
-        k7  = ODEfun( t + a7*h,                y + h*(b71*k1 + b73*k3  + b74*k4  + b75*k5 + b76*k6));
-        k8  = ODEfun( t + a8*h,                         y + h*(b81*k1 + b85*k5  + b86*k6  + b87*k7));
-        k9  = ODEfun( t + a9*h,                y + h*(b91*k1 + b95*k5  + b96*k6  + b97*k7 + b98*k8));
-        k10 = ODEfun(t + a10*h,   y + h*(b101*k1 + b105*k5 + b106*k6 + b107*k7 + b108*k8 + b109*k9));
-        k11 = ODEfun(    t + h, y + h*(b115*k5 + b116*k6 + b117*k7 + b118*k8 + b119*k9 + b1110*k10));
+        k1  = f(    t + h,                                                                   y);
+        k2  = f( t + a2*h,                                                      y + h*(b21*k1));
+        k3  = f( t + a3*h,                                             y + h*(b31*k1 + b32*k2));
+        k4  = f( t + a4*h,                                   y + h*(b41*k1 + b42*k2  + b43*k3));
+        k5  = f( t + a5*h,                                   y + h*(b51*k1 + b53*k3  + b54*k4));
+        k6  = f( t + a6*h,                         y + h*(b61*k1 + b63*k3  + b64*k4  + b65*k5));
+        k7  = f( t + a7*h,                y + h*(b71*k1 + b73*k3  + b74*k4  + b75*k5 + b76*k6));
+        k8  = f( t + a8*h,                         y + h*(b81*k1 + b85*k5  + b86*k6  + b87*k7));
+        k9  = f( t + a9*h,                y + h*(b91*k1 + b95*k5  + b96*k6  + b97*k7 + b98*k8));
+        k10 = f(t + a10*h,   y + h*(b101*k1 + b105*k5 + b106*k6 + b107*k7 + b108*k8 + b109*k9));
+        k11 = f(    t + h, y + h*(b115*k5 + b116*k6 + b117*k7 + b118*k8 + b119*k9 + b1110*k10));
 
         % Update Values
         y = y + h * (c1*k1 + c8*k8 + c9*k9 + c10*k10 + c11*k11);

@@ -1,10 +1,30 @@
 function [Time, Y] = odeRKO10(f, TSpan, Y0, h)
     %ODERKO10 10th Order Runge-Kutta Ono's Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         10th Order Runge-Kutta Ono
+    %     Order:
+    %                         10
+    %     Number of Stages:
+    %                         17
+    %     Number of Registers:
+    %                         17
+    %     Links:
+    %         1. http://www.peterstone.name/Maplepgs/Maple/nmthds/RKcoeff/Runge_Kutta_schemes/RK10/RKcoeff10f_1.pdf
+    %
+    %
     % Inputs:
     %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
-    %   h: initial step size (default: 0.01)
+    %   Y0: initial condition as a column vector
+    %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE

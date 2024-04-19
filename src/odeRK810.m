@@ -1,10 +1,30 @@
-function [Time, Y] = odeRK810(ODEfun, TSpan, Y0, h)
-    %ODERK810 8th Order Take-One Runge-Kutta Method Implementation
+function [Time, Y] = odeRK810(f, TSpan, Y0, h)
+    %ODERK810 8th Order Runge-Kutta Shank's ODE Solver Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         10-stage, 8th order Runge-Kutta Shanks
+    %     Order:
+    %                         8
+    %     Number of Stages:
+    %                         10
+    %     Number of Registers:
+    %                         10
+    %     Links:
+    %         1. http://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19650022581.pdf
+    %
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
-    %   h: initial step size (default: 0.01)
+    %   Y0: initial condition as a column vector
+    %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -111,16 +131,16 @@ function [Time, Y] = odeRK810(ODEfun, TSpan, Y0, h)
     Idx = 1;
     while t < tf
         % Method
-        k1  = ODEfun(       t,                                                                                 y);
-        k2  = ODEfun(t + a1*h,                                                                      y + aa1*h*k1);
-        k3  = ODEfun(t + a2*h,                                                           y + aa2*h*(k1 + b21*k2));
-        k4  = ODEfun(t + a3*h,                                                           y + aa3*h*(k1 + b32*k3));
-        k5  = ODEfun(t + a4*h,                                                           y + aa4*h*(k1 + b43*k4));
-        k6  = ODEfun(t + a5*h,                                     y + aa5*h*(b50*k1 + b52*k3 + b53*k4 + b54*k5));
-        k7  = ODEfun(t + a6*h,                            y + aa6*h*(b60*k1 + b62*k3 + b63*k4 + b64*k5 + b65*k6));
-        k8  = ODEfun(   t + h,                   y + aa7*h*(b70*k1 + b72*k3 + b73*k4 + b74*k5 + b75*k6 + b76*k7));
-        k9  = ODEfun(t + a8*h,          y + aa8*h*(b80*k1 + b82*k3 + b83*k4 + b84*k5 + b85*k6 + b86*k7 + b87*k8));
-        k10 = ODEfun(   t + h, y + aa9*h*(b90*k1 + b92*k3 + b93*k4 + b94*k5 + b95*k6 + b96*k7 + b97*k8 + b98*k9));
+        k1  = f(       t,                                                                                 y);
+        k2  = f(t + a1*h,                                                                      y + aa1*h*k1);
+        k3  = f(t + a2*h,                                                           y + aa2*h*(k1 + b21*k2));
+        k4  = f(t + a3*h,                                                           y + aa3*h*(k1 + b32*k3));
+        k5  = f(t + a4*h,                                                           y + aa4*h*(k1 + b43*k4));
+        k6  = f(t + a5*h,                                     y + aa5*h*(b50*k1 + b52*k3 + b53*k4 + b54*k5));
+        k7  = f(t + a6*h,                            y + aa6*h*(b60*k1 + b62*k3 + b63*k4 + b64*k5 + b65*k6));
+        k8  = f(   t + h,                   y + aa7*h*(b70*k1 + b72*k3 + b73*k4 + b74*k5 + b75*k6 + b76*k7));
+        k9  = f(t + a8*h,          y + aa8*h*(b80*k1 + b82*k3 + b83*k4 + b84*k5 + b85*k6 + b86*k7 + b87*k8));
+        k10 = f(   t + h, y + aa9*h*(b90*k1 + b92*k3 + b93*k4 + b94*k5 + b95*k6 + b96*k7 + b97*k8 + b98*k9));
 
         % Update Values
         y = y + c * h * (c0*k1 + c3*k4 + c4*k5 + c5*k6 + c6*k7 + c8*k9 + c9*k10);

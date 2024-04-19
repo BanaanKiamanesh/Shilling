@@ -1,10 +1,30 @@
 function [Time, Y] = odeRKB6(f, TSpan, Y0, h)
     %ODERKB6 6th Order Runge-Kutta Butcher's Method Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         6th order Runge-Kutta Butcher
+    %     Order:
+    %                         6
+    %     Number of Stages:
+    %                         7
+    %     Number of Registers:
+    %                         7
+    %     Links:
+    %         1. https://www.cambridge.org/core/services/aop-cambridge-core/content/view/40DFE501CAB781C9AAE1439B6B8F481A/S1446788700023387a.pdf/div-class-title-on-runge-kutta-processes-of-high-order-div.pdf
+    %
+    %
     % Inputs:
     %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE

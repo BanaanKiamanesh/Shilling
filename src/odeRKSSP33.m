@@ -1,10 +1,34 @@
-function [Time, Y] = odeRKSSP33(ODEfun, TSpan, Y0, h)
-    %ODERKSSP33, 3-stage, 3rd order TVD Runge-Kutta method of Shu and Osher (1988). CFL=1.0. Implementation
+function [Time, Y] = odeRKSSP33(f, TSpan, Y0, h)
+    %ODERKSSP33, 3-stage, 3rd Rrder TVD Runge-Kutta Method of Shu and Osher (1988) Implementation
+    %
+    % Method Properties:
+    %     Method Name:
+    %                         3-stage, 3rd Rrder TVD Runge-Kutta Shu-Osher
+    %     Order:
+    %                         3
+    %     Number of Stages:
+    %                         3
+    %     Number of Registers:
+    %                         1
+    %     CFL:
+    %                         1.0
+    %     Strong Stability Preserving:
+    %                         true
+    %     Links:
+    %         1. https://ntrs.nasa.gov/api/citations/19880014833/downloads/19880014833.pdf
+    %
+    %
     % Inputs:
-    %   ODEfun: function handle for the ODE
+    %   f: function handle for the ODE
     %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector (default: zeros)
+    %   Y0: initial condition as a column vector
     %   h: step size (default: 0.01)
+    %
+    %
+    % Outputs:
+    %   Time: time vector associated with the integration
+    %   Y: solved ode state evolution matrix
+    %
     %
     % Example Usage:
     %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
@@ -50,9 +74,9 @@ function [Time, Y] = odeRKSSP33(ODEfun, TSpan, Y0, h)
     idx = 1;
     while t < tf
         % Method
-        k = ODEfun(      t,   y); Tmp = y + h*k;
-        k = ODEfun(  t + h, Tmp); Tmp = (3*y + Tmp + h*k) / 4;
-        k = ODEfun(t + h/2, Tmp);
+        k = f(      t,   y); Tmp = y + h*k;
+        k = f(  t + h, Tmp); Tmp = (3*y + Tmp + h*k) / 4;
+        k = f(t + h/2, Tmp);
 
         y = (y + 2*Tmp + 2*h*k) / 3;
         t = t + h;
