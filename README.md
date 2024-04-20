@@ -4,6 +4,8 @@ Bucket full of solvers for nth order non-linear ODEs all implemented in MATLAB.
 
 ## List of Available Solvers
 
+### Fixed Step Solvers
+
 Name       | Description| Properties | Order | Stages   | Registers | CFL  | Reference
 ---        | ---        | ---        | ---   | ---      | ---       | ---  | ---
 `euler` | Euler |  | 1 | 1 | 1 | 1.0 | [Euler (1768)](https://archive.org/details/institutionescal020326mbp)
