@@ -4,6 +4,8 @@ function [Time, Y] = odeMidpoint(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         Midpoint
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         2
     %     Number of Stages:

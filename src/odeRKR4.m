@@ -4,6 +4,10 @@ function [Time, Y] = odeRKR4(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         4th order Runge-Kutta Ralston
+    %     Introduced in Year:
+    %                         1962
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         4
     %     Number of Stages:

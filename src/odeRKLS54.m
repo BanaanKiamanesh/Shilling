@@ -4,6 +4,10 @@ function [Time, Y] = odeRKLS54(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         5-stage, 4th Order Low Storage Runge-Kutta Carpenter-Kennedy
+    %     Introduced in Year:
+    %                         1994
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         4
     %     Number of Stages:

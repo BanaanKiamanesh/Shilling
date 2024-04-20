@@ -4,6 +4,10 @@ function [Time, Y] = odeRKSSP54(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         5-stage, 4th order SSP Runge-Kutta Spiteri-Ruuth
+    %     Introduced in Year:
+    %                         2006
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         4
     %     Number of Stages:

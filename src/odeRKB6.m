@@ -4,6 +4,10 @@ function [Time, Y] = odeRKB6(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         6th order Runge-Kutta Butcher
+    %     Introduced in Year:
+    %                         1963
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         6
     %     Number of Stages:

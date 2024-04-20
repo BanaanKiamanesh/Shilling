@@ -4,6 +4,10 @@ function [Time, Y] = odeRK7(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         7th Order Runge-Kutta Shanks
+    %     Introduced in Year:
+    %                         1965
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         7
     %     Number of Stages:

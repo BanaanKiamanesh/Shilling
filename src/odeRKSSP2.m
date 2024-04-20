@@ -4,6 +4,10 @@ function [Time, Y] = odeRKSSP2(ODEfun, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         2-stage, 2nd Order TVD Runge-Kutta Shu-Osher
+    %     Introduced in Year:
+    %                         1988
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         2
     %     Number of Stages:

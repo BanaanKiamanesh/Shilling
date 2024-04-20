@@ -4,6 +4,10 @@ function [Time, Y] = odeEuler(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         Euler
+    %     Introduced in Year:
+    %                         1768
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         1
     %     Number of Stages:

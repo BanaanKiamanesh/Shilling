@@ -4,6 +4,10 @@ function [Time, Y] = odeRKLK5a(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         5th order Runge-Kutta Luther-Konen (first method)
+    %     Introduced in Year:
+    %                         1965
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         5
     %     Number of Stages:

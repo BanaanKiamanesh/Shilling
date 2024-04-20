@@ -4,6 +4,10 @@ function [Time, Y] = odeRKLS44(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         4-stage, 4th order low storage non-TVD Runge-Kutta Jiang-Shu
+    %     Introduced in Year:
+    %                         1988
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         4
     %     Number of Stages:

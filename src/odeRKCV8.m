@@ -4,6 +4,10 @@ function [Time, Y] = odeRKCV8(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         11-stage, 8th order Runge-Kutta Cooper-Verner
+    %     Introduced in Year:
+    %                         1972
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         8
     %     Number of Stages:

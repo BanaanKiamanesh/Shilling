@@ -4,6 +4,10 @@ function [Time, Y] = odeRK812(ODEfun, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         12-stage, 8th order Runge-Kutta Shanks
+    %     Introduced in Year:
+    %                         1965
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         8
     %     Number of Stages:

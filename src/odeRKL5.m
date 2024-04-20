@@ -4,6 +4,10 @@ function [Time, Y] = odeRKL5(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         5th order Runge-Kutta Lawson
+    %     Introduced in Year:
+    %                         1966
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         5
     %     Number of Stages:

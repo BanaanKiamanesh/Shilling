@@ -4,6 +4,10 @@ function [Time, Y] = odeRKO10(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         10th Order Runge-Kutta Ono
+    %     Introduced in Year:
+    %                         2003
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         10
     %     Number of Stages:

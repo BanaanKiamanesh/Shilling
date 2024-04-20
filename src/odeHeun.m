@@ -4,6 +4,8 @@ function [Time, Y] = odeHeun(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         Heun
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         2
     %     Number of Stages:

@@ -4,6 +4,10 @@ function [Time, Y] = odeRK4(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         4th order Runge-Kutta
+    %     Introduced in Year:
+    %                         1901
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         4
     %     Number of Stages:

@@ -4,6 +4,10 @@ function [Time, Y] = odeRKSSP33(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         3-stage, 3rd Rrder TVD Runge-Kutta Shu-Osher
+    %     Introduced in Year:
+    %                         1988
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         3
     %     Number of Stages:

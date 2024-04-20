@@ -4,6 +4,10 @@ function [Time, Y] = odeRKS4(f, TSpan, Y0, h)
     % Method Properties:
     %     Method Name:
     %                         4th order Runge-Kutta Shanks
+    %     Introduced in Year:
+    %                         1965
+    %     Method Type:
+    %                         Fixed Time Step, Explicit
     %     Order:
     %                         4
     %     Number of Stages:
