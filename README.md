@@ -1,6 +1,44 @@
 # Shilling
 
-Bucket full of solvers for nth order non-linear ODEs all implemented in MATLAB.
+Pure-MATLAB collection of fixed-step explicit ordinary differential equation (ODE) solvers reaching from the first-order Euler scheme all the way up to 10-th order Runge–Kutta formulas.
+
+Shilling exposes each algorithm as an individual function (e.g. `odeRK4`) and, for convenience, provides a single high-level wrapper `odeManager` which can call any solver in the library with identical syntax. This makes the toolbox ideal for teaching, benchmarking or whenever you need full control over the integration time-step (for example when discretising PDEs in time).
+
+## Quick start
+
+```matlab
+addpath(genpath('.'));   % add Shilling to the MATLAB path
+
+% Van-der-Pol oscillator
+a  = @(t,x) [x(2); (1-x(1).^2).*x(2) - x(1)];
+t  = [0 20];
+y0 = [2; 0];
+
+opt = odeOptions('Solver','rk5','StepSize',1e-2);
+[T, Y] = odeManager(a, t, y0, opt);
+
+plot(T, Y); xlabel('t'); legend('x_1','x_2');
+```
+
+A standalone version of this script is available in `Examples/VanDerPolExample.m`.
+
+## Installation
+
+1. Clone or download this repository.
+2. Inside MATLAB add the folder to the search path:
+
+```matlab
+addpath(genpath('<path-to-shilling>'));
+savepath        % (optional) makes path permanent
+```
+
+No additional toolboxes are required – everything is implemented from scratch.
+
+## Directory layout
+
+- `src/`        – solvers and helper utilities  
+- `Examples/`   – ready-to-run demonstration scripts  
+- `README.md`   – project documentation
 
 ## List of Available Solvers
 
@@ -12,7 +50,7 @@ Name       | Description| Properties | Order | Stages   | Registers | CFL  | Ref
 `midpoint` | Midpoint |  | 2 | 2 | 2 |  | ?
 `heun` | Heun |  | 2 | 2 | 2 |  | ?
 `rkssp22` | 2-stage, 2nd order TVD Runge-Kutta Shu-Osher | Strong stability preserving | 2 | 2 | 1 | 1.0 | [Shu & Oscher (1988)](https://ntrs.nasa.gov/api/citations/19880014833/downloads/19880014833.pdf)
-`rk3` | 3th order Runge-Kutta |  | 3 | 3 | 3 |  | ?
+`rk3` | 3rd order Runge-Kutta |  | 3 | 3 | 3 |  | ?
 `rkssp33` | 3-stage, 3rd order TVD Runge-Kutta Shu-Osher | Strong stability preserving | 3 | 3 | 1 | 1.0 | [Shu & Oscher (1988)](https://ntrs.nasa.gov/api/citations/19880014833/downloads/19880014833.pdf)
 `rkssp53` | 5-stage, 3rd order SSP Runge-Kutta Spiteri-Ruuth | Strong stability preserving | 3 | 5 | 2 | 2.65 | [Ruuth (2006)](https://www.ams.org/journals/mcom/2006-75-253/S0025-5718-05-01772-2/S0025-5718-05-01772-2.pdf)
 `rk4` | Classic 4th order Runge-Kutta |  | 4 | 4 | 4 |  | [Kutta (1901)](https://archive.org/stream/zeitschriftfrma12runggoog#page/n449/mode/2up)

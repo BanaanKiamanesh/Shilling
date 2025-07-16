@@ -3,7 +3,7 @@ function [Time, Y] = odeRK3(f, TSpan, Y0, h)
     %
     % Method Properties:
     %     Method Name:
-    %                         3th order Runge-Kutta
+    %                         3rd order Runge-Kutta
     %     Method Type:
     %                         Fixed Time Step, Explicit
     %     Order:
