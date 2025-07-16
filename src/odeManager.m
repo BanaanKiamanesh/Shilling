@@ -1,5 +1,5 @@
 function [Time, Y] = odeManager(f, TSpan, Y0, varargin)
-%ODEMANAGER High level wrapper that dispatches to any ODE solver in the library.
+%ODEMANAGER High-level interface for all ODE solvers in the library.
 %
 %   [T, Y] = ODEMANAGER(F, TSPAN, Y0) solves the system defined by the
 %   function handle F with the default solver (classic RK4) on the time
@@ -10,6 +10,18 @@ function [Time, Y] = odeManager(f, TSpan, Y0, varargin)
 %       OPTIONS.Solver   - Name of the solver (string) or a function handle.
 %       OPTIONS.StepSize - Fixed time-step size (scalar) used by fixed-step
 %                          solvers.
+%       OPTIONS.RelTol   - Relative tolerance (not used by fixed-step solvers).
+%       OPTIONS.AbsTol   - Absolute tolerance (not used by fixed-step solvers).
+%
+%   Inputs:
+%     F      - Function handle for the ODE system, f(t, y)
+%     TSPAN  - Time interval as [t0, tf]
+%     Y0     - Initial condition (column vector)
+%     OPTIONS- (optional) struct from odeOptions
+%
+%   Outputs:
+%     T      - Time vector
+%     Y      - Solution matrix (each row corresponds to a time in T)
 %
 %   Example (Van der Pol ODE):
 %       f  = @(t, x) [x(2); (1-x(1)^2).*x(2) - x(1)];
@@ -19,7 +31,7 @@ function [Time, Y] = odeManager(f, TSpan, Y0, varargin)
 %       [T, Y] = odeManager(f, ts, y0, opt);
 %       plot(T, Y);
 %
-%   See also ODEOPTIONS.
+%   See also: odeOptions, README.md for more details and examples.
 
     % Merge varargin into options
     if nargin < 4 || isempty(varargin)

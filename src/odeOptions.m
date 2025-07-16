@@ -23,7 +23,7 @@ function options = odeOptions(varargin)
 %   Example:
 %       opts = odeOptions('Solver','rk4','StepSize',1e-2,'RelTol',1e-8);
 %
-%   See also ODEMANAGER.
+%   See also: odeManager, README.md for more details and examples.
 
     % Default option values
     defaultOptions = struct( ...

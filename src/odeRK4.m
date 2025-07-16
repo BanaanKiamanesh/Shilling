@@ -1,50 +1,36 @@
 function [Time, Y] = odeRK4(f, TSpan, Y0, h)
-    %ODERK4 4th Order Runge-Kutta ODE Solver Implementation
-    %
-    % Method Properties:
-    %     Method Name:
-    %                         4th order Runge-Kutta
-    %     Introduced in Year:
-    %                         1901
-    %     Method Type:
-    %                         Fixed Time Step, Explicit
-    %     Order:
-    %                         4
-    %     Number of Stages:
-    %                         4
-    %     Number of Registers:
-    %                         4
-    %     Links:
-    %         1. https://archive.org/stream/zeitschriftfrma12runggoog#page/n449/mode/2up
-    %
-    %
-    % Inputs:
-    %   f: function handle for the ODE
-    %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector
-    %   h: step size (default: 0.01)
-    %
-    %
-    % Outputs:
-    %   Time: time vector associated with the integration
-    %   Y: solved ode state evolution matrix
-    %
-    %
-    % Example Usage:
-    %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
-    %   TSpan= [0, 20];    % Time span
-    %   Y0= [2; 0];        % Initial condition
-    %   h = 0.01;          % Step size
-    %   [T, Y] = odeRK4(f, TSpan, Y0, h);
-    %
-    %   % Plot results
-    %   figure;
-    %   plot(T, Y, 'LineWidth', 2);
-    %   xlabel('Time [s]');
-    %   ylabel('State Variables');
-    %   title('Van der Pol Equation');
-    %   grid on;
-    %   axis([0, 20, -3, 3]);
+%ODERK4 4th Order Runge-Kutta ODE Solver Implementation
+%
+%   Implements the classic explicit 4th order Runge-Kutta method for ODEs.
+%
+%   Method Properties:
+%     Method Name:        4th order Runge-Kutta
+%     Introduced in Year: 1901
+%     Method Type:        Fixed Time Step, Explicit
+%     Order:              4
+%     Number of Stages:   4
+%     Number of Registers:4
+%     Reference:          https://archive.org/stream/zeitschriftfrma12runggoog#page/n449/mode/2up
+%
+%   Inputs:
+%     f     - Function handle for the ODE, f(t, y)
+%     TSpan - Time span as [t0, tf]
+%     Y0    - Initial condition (column vector)
+%     h     - Step size (default: 0.01)
+%
+%   Outputs:
+%     Time  - Time vector
+%     Y     - Solution matrix (each row corresponds to a time in Time)
+%
+%   Example Usage:
+%     f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)];
+%     TSpan = [0, 20];
+%     Y0 = [2; 0];
+%     h = 0.01;
+%     [T, Y] = odeRK4(f, TSpan, Y0, h);
+%     plot(T, Y);
+%
+%   See also: odeManager, odeOptions, README.md
 
     % Set default values if not provided
     if nargin < 4
