@@ -1,50 +1,48 @@
 function [Time, Y] = odeRK4(f, TSpan, Y0, h)
-    %ODERK4 4th Order Runge-Kutta ODE Solver Implementation
+    %ODERK4 Classic 4th-order Runge-Kutta method for solving ODEs.
     %
-    % Method Properties:
-    %     Method Name:
-    %                         4th order Runge-Kutta
-    %     Introduced in Year:
-    %                         1901
-    %     Method Type:
-    %                         Fixed Time Step, Explicit
-    %     Order:
-    %                         4
-    %     Number of Stages:
-    %                         4
-    %     Number of Registers:
-    %                         4
-    %     Links:
-    %         1. https://archive.org/stream/zeitschriftfrma12runggoog#page/n449/mode/2up
+    %   [T, Y] = ODERK4(F, TSPAN, Y0, H) solves the system of differential
+    %   equations dy/dt = F(t,y) using the classic 4th-order Runge-Kutta
+    %   method with fixed step size H.
     %
+    %   METHOD PROPERTIES:
+    %       Name:           Classic 4th-order Runge-Kutta
+    %       Order:          4
+    %       Type:           Fixed step, explicit
+    %       Stages:         4
+    %       Registers:      4
+    %       CFL:            ~2.8
+    %       Year:           1901
+    %       Reference:      Kutta (1901)
     %
-    % Inputs:
-    %   f: function handle for the ODE
-    %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector
-    %   h: step size (default: 0.01)
+    %   INPUTS:
+    %       F           Function handle @(t,y) that returns dy/dt
+    %       TSPAN       Time span [t0, tf] as 2-element vector
+    %       Y0          Initial condition as column vector
+    %       H           Step size (default: 0.01)
     %
+    %   OUTPUTS:
+    %       T           Time vector
+    %       Y           Solution matrix (each row is a time point)
     %
-    % Outputs:
-    %   Time: time vector associated with the integration
-    %   Y: solved ode state evolution matrix
+    %   EXAMPLE:
+    %       % Solve harmonic oscillator: d²x/dt² + x = 0
+    %       % Convert to system: [x; dx/dt] = [x2; -x1]
+    %       f = @(t, x) [x(2); -x(1)];
+    %       tspan = [0, 2*pi];
+    %       y0 = [1; 0];  % x(0) = 1, dx/dt(0) = 0
+    %       h = 0.1;
+    %       [t, y] = odeRK4(f, tspan, y0, h);
+    %       plot(t, y(:,1), 'o-');
+    %       xlabel('Time'); ylabel('x(t)'); title('Harmonic Oscillator');
     %
+    %   SEE ALSO:
+    %       ODEMANAGER, ODEOPTIONS, ODEEULER, ODERK5
     %
-    % Example Usage:
-    %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
-    %   TSpan= [0, 20];    % Time span
-    %   Y0= [2; 0];        % Initial condition
-    %   h = 0.01;          % Step size
-    %   [T, Y] = odeRK4(f, TSpan, Y0, h);
-    %
-    %   % Plot results
-    %   figure;
-    %   plot(T, Y, 'LineWidth', 2);
-    %   xlabel('Time [s]');
-    %   ylabel('State Variables');
-    %   title('Van der Pol Equation');
-    %   grid on;
-    %   axis([0, 20, -3, 3]);
+    %   REFERENCE:
+    %       Kutta, W. (1901). Beitrag zur näherungsweisen Integration
+    %       totaler Differentialgleichungen. Zeitschrift für Mathematik
+    %       und Physik, 46, 435-453.
 
     % Set default values if not provided
     if nargin < 4

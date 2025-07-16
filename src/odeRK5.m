@@ -1,48 +1,47 @@
 function [Time, Y] = odeRK5(f, TSpan, Y0, h)
-    %ODERK5 5th Order Runge-Kutta Method Implementation
+    %ODERK5 5th-order Runge-Kutta method for solving ODEs.
     %
-    % Method Properties:
-    %     Method Name:
-    %                         5th order Runge-Kutta
-    %     Introduced in Year:
-    %                         1965
-    %     Method Type:
-    %                         Fixed Time Step, Explicit
-    %     Order:
-    %                         5
-    %     Number of Stages:
-    %                         6
-    %     Number of Registers:
-    %                         6
+    %   [T, Y] = ODERK5(F, TSPAN, Y0, H) solves the system of differential
+    %   equations dy/dt = F(t,y) using a 5th-order Runge-Kutta method
+    %   with fixed step size H.
     %
+    %   METHOD PROPERTIES:
+    %       Name:           5th-order Runge-Kutta
+    %       Order:          5
+    %       Type:           Fixed step, explicit
+    %       Stages:         6
+    %       Registers:      6
+    %       CFL:            ~3.2
+    %       Year:           1965
+    %       Reference:      Classical method
     %
-    % Inputs:
-    %   f: function handle for the ODE
-    %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector
-    %   h: step size (default: 0.01)
+    %   INPUTS:
+    %       F           Function handle @(t,y) that returns dy/dt
+    %       TSPAN       Time span [t0, tf] as 2-element vector
+    %       Y0          Initial condition as column vector
+    %       H           Step size (default: 0.01)
     %
+    %   OUTPUTS:
+    %       T           Time vector
+    %       Y           Solution matrix (each row is a time point)
     %
-    % Outputs:
-    %   Time: time vector associated with the integration
-    %   Y: solved ode state evolution matrix
+    %   EXAMPLE:
+    %       % Solve pendulum equation: d²θ/dt² + (g/L)*sin(θ) = 0
+    %       % Convert to system: [θ; dθ/dt] = [θ2; -(g/L)*sin(θ1)]
+    %       g = 9.81; L = 1;
+    %       f = @(t, x) [x(2); -(g/L)*sin(x(1))];
+    %       tspan = [0, 10];
+    %       y0 = [pi/4; 0];  % θ(0) = π/4, dθ/dt(0) = 0
+    %       h = 0.01;
+    %       [t, y] = odeRK5(f, tspan, y0, h);
+    %       plot(t, y(:,1), 'o-');
+    %       xlabel('Time'); ylabel('θ(t)'); title('Pendulum Oscillation');
     %
+    %   SEE ALSO:
+    %       ODEMANAGER, ODEOPTIONS, ODERK4, ODERK7
     %
-    % Example Usage:
-    %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
-    %   TSpan= [0, 20];    % Time span
-    %   Y0= [2; 0];        % Initial condition
-    %   h = 0.01;          % Step size
-    %   [T, Y] = odeRK5(f, TSpan, Y0, h);
-    %
-    %   % Plot results
-    %   figure;
-    %   plot(T, Y, 'LineWidth', 2);
-    %   xlabel('Time [s]');
-    %   ylabel('State Variables');
-    %   title('Van der Pol Equation');
-    %   grid on;
-    %   axis([0, 20, -3, 3]);
+    %   REFERENCE:
+    %       Classical 5th-order Runge-Kutta method.
 
     % Set default values if not provided
     if nargin < 4

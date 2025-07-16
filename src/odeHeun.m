@@ -1,46 +1,48 @@
 function [Time, Y] = odeHeun(f, TSpan, Y0, h)
-    %ODEHEUN Heun's ODE Solver Implementation
+    %ODEHEUN Heun's method for solving ordinary differential equations.
     %
-    % Method Properties:
-    %     Method Name:
-    %                         Heun
-    %     Method Type:
-    %                         Fixed Time Step, Explicit
-    %     Order:
-    %                         2
-    %     Number of Stages:
-    %                         2
-    %     Number of Registers:
-    %                         2
+    %   [T, Y] = ODEHEUN(F, TSPAN, Y0, H) solves the system of differential
+    %   equations dy/dt = F(t,y) using Heun's method (improved Euler)
+    %   with fixed step size H.
     %
+    %   METHOD PROPERTIES:
+    %       Name:           Heun's method (improved Euler)
+    %       Order:          2
+    %       Type:           Fixed step, explicit
+    %       Stages:         2
+    %       Registers:      2
+    %       CFL:            2.0
+    %       Year:           1900
+    %       Reference:      Heun (1900)
     %
-    % Inputs:
-    %   f: function handle for the ODE
-    %   TSpan: time span as [t0, tf]
-    %   Y0: initial condition as a column vector
-    %   h: step size (default: 0.01)
+    %   INPUTS:
+    %       F           Function handle @(t,y) that returns dy/dt
+    %       TSPAN       Time span [t0, tf] as 2-element vector
+    %       Y0          Initial condition as column vector
+    %       H           Step size (default: 0.01)
     %
+    %   OUTPUTS:
+    %       T           Time vector
+    %       Y           Solution matrix (each row is a time point)
     %
-    % Outputs:
-    %   Time: time vector associated with the integration
-    %   Y: solved ode state evolution matrix
+    %   EXAMPLE:
+    %       % Solve logistic equation: dy/dt = r*y*(1-y/K)
+    %       r = 0.5; K = 10;
+    %       f = @(t, y) r*y*(1-y/K);
+    %       tspan = [0, 10];
+    %       y0 = 1;
+    %       h = 0.1;
+    %       [t, y] = odeHeun(f, tspan, y0, h);
+    %       plot(t, y, 'o-');
+    %       xlabel('Time'); ylabel('Population'); title('Logistic Growth');
     %
+    %   SEE ALSO:
+    %       ODEMANAGER, ODEOPTIONS, ODEEULER, ODERK4
     %
-    % Example Usage:
-    %   f = @(t, x) [x(2); (1 - x(1)^2)*x(2) - x(1)]; % Van der Pol ODE
-    %   TSpan= [0, 20];    % Time span
-    %   Y0= [2; 0];        % Initial condition
-    %   h = 0.01;          % Step size
-    %   [T, Y] = odeHeun(f, TSpan, Y0, h);
-    %
-    %   % Plot results
-    %   figure;
-    %   plot(T, Y, 'LineWidth', 2);
-    %   xlabel('Time [s]');
-    %   ylabel('State Variables');
-    %   title('Van der Pol Equation');
-    %   grid on;
-    %   axis([0, 20, -3, 3]);
+    %   REFERENCE:
+    %       Heun, K. (1900). Neue Methode zur approximativen Integration
+    %       der Differentialgleichungen einer unabhängigen Veränderlichen.
+    %       Zeitschrift für Mathematik und Physik, 45, 23-38.
 
     % Set default values if not provided
     if nargin < 4
